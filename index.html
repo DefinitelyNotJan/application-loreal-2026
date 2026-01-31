@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Jan Lönnqvist / Senior Designer, Skincare Packaging / L'Oréal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #1a1a1a;
+            --deep: #0d0d0d;
+            --cream: #f8f5f0;
+            --warm: #ede6dc;
+            --gold: #c9a96e;
+            --gold-soft: rgba(201, 169, 110, 0.1);
+            --rose: #d4a0a0;
+            --blush: #e8c4b8;
+            --charcoal: #3d3d3d;
+            --text: rgba(26,26,26,0.6);
+            --text-light: rgba(255,255,255,0.5);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        /* ====== CURSOR TRAIL (luxury feel) ====== */
+        .cursor-dot {
+            position: fixed;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            pointer-events: none;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            mix-blend-mode: multiply;
+        }
+
+        body:hover .cursor-dot { opacity: 0.4; }
+
+        /* ====== NAV ====== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 24px 56px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white, #fff);
+            letter-spacing: 0.05em;
+        }
+
+        .nav-label {
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--white, #fff);
+            opacity: 0.5;
+        }
+
+        /* ====== HERO: FULL VIEWPORT LUXURY ====== */
+        .hero {
+            height: 100vh;
+            background: var(--deep);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Layered parallax elements */
+        .hero-layer {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* Abstract luxury shapes */
+        .hl-arch {
+            width: 400px; height: 600px;
+            border: 1px solid rgba(201,169,110,0.08);
+            border-radius: 200px 200px 0 0;
+            right: 10%; top: 10%;
+        }
+
+        .hl-circle {
+            width: 300px; height: 300px;
+            border: 1px solid rgba(212,160,160,0.06);
+            border-radius: 50%;
+            left: -5%; bottom: 5%;
+        }
+
+        .hl-line1 {
+            width: 200px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,169,110,0.15), transparent);
+            top: 30%; left: 20%;
+        }
+
+        .hl-line2 {
+            width: 1px; height: 300px;
+            background: linear-gradient(180deg, transparent, rgba(201,169,110,0.1), transparent);
+            right: 35%; top: 15%;
+        }
+
+        .hl-dot1 {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.2;
+            top: 25%; left: 45%;
+        }
+
+        .hl-dot2 {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--rose);
+            opacity: 0.15;
+            bottom: 30%; right: 25%;
+        }
+
+        /* Gradient wash */
+        .hl-glow {
+            width: 800px; height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 70%);
+            top: -20%; right: -10%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding: 0 56px;
+            max-width: 750px;
+        }
+
+        .hero-pre {
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.2s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 7vw, 6.5rem);
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.3s ease both;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .hero-body {
+            margin-top: 28px;
+            font-size: 0.95rem;
+            line-height: 1.85;
+            color: var(--text-light);
+            max-width: 480px;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.4s ease both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ====== MARQUEE ====== */
+        .marquee-wrap {
+            overflow: hidden;
+            padding: 20px 0;
+            background: var(--charcoal);
+        }
+
+        .marquee-inner {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 40s linear infinite;
+        }
+
+        .marquee-inner span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255,255,255,0.15);
+            white-space: nowrap;
+            padding: 0 40px;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ====== SECTION SHARED ====== */
+        .sec-pad { padding: 140px 56px; }
+
+        .label {
+            font-size: 0.45rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .label.gold { color: var(--gold); }
+        .label.muted { color: rgba(26,26,26,0.25); }
+
+        .heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .heading em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .body-text {
+            font-size: 0.92rem;
+            line-height: 1.9;
+        }
+
+        /* ====== L'ORÉAL CONNECTION (cream bg) ====== */
+        .connection-sec {
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .connection-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .connection-sec .bg-shape {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .bg-arch-right {
+            width: 350px; height: 550px;
+            border: 1px solid rgba(201,169,110,0.08);
+            border-radius: 175px 175px 0 0;
+            right: -5%; top: 10%;
+        }
+
+        .bg-circle-left {
+            width: 250px; height: 250px;
+            border: 1px solid rgba(212,160,160,0.06);
+            border-radius: 50%;
+            left: 5%; bottom: 15%;
+        }
+
+        .connection-body {
+            color: var(--text);
+        }
+
+        .connection-body strong {
+            color: var(--black);
+        }
+
+        .highlight-card {
+            background: var(--gold-soft);
+            border-left: 3px solid var(--gold);
+            padding: 28px 32px;
+            margin-top: 32px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-card p {
+            font-size: 0.88rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .highlight-card p strong {
+            color: var(--black);
+        }
+
+        /* ====== RITUALS CASE (dark) ====== */
+        .rituals-sec {
+            background: var(--deep);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rituals-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .rit-visual {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Abstract product silhouettes */
+        .rit-shape {
+            position: absolute;
+            border-radius: 100px;
+            will-change: transform;
+        }
+
+        .rs1 {
+            width: 120px; height: 280px;
+            border: 1px solid rgba(201,169,110,0.15);
+            left: 15%; top: 10%;
+        }
+
+        .rs2 {
+            width: 80px; height: 200px;
+            background: rgba(201,169,110,0.04);
+            border: 1px solid rgba(201,169,110,0.08);
+            left: 45%; top: 20%;
+        }
+
+        .rs3 {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 1px solid rgba(232,196,184,0.1);
+            right: 15%; bottom: 25%;
+        }
+
+        .rs4 {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            background: rgba(212,160,160,0.03);
+            border: 1px solid rgba(212,160,160,0.06);
+            left: 30%; bottom: 10%;
+        }
+
+        .rit-text .body-text {
+            color: var(--text-light);
+        }
+
+        .rit-text .body-text strong {
+            color: #fff;
+        }
+
+        .rit-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 36px;
+        }
+
+        .rit-stat-val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .rit-stat-label {
+            font-size: 0.45rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+            margin-top: 4px;
+        }
+
+        /* ====== SKILLS (warm bg) ====== */
+        .skills-sec {
+            background: var(--warm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skills-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .skill-card {
+            background: var(--cream);
+            padding: 36px 32px;
+            border-radius: 12px;
+            border: 1px solid rgba(201,169,110,0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--rose));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-card:hover::before { transform: scaleX(1); }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(201,169,110,0.08);
+        }
+
+        .sk-need {
+            font-size: 0.4rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .sk-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .sk-desc {
+            font-size: 0.78rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        /* ====== DHL CASE (cream) ====== */
+        .dhl-sec {
+            background: var(--cream);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dhl-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .dhl-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .dhl-card {
+            background: var(--white, #fff);
+            padding: 28px 24px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.4s;
+        }
+
+        .dhl-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+        }
+
+        .dhl-card h4 {
+            font-size: 0.45rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .dhl-card p {
+            font-size: 0.8rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .dhl-card p strong {
+            color: var(--black);
+        }
+
+        .dhl-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 28px;
+        }
+
+        .dhl-stat-val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .dhl-stat-label {
+            font-size: 0.45rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(26,26,26,0.25);
+            margin-top: 4px;
+        }
+
+        /* ====== EXPERIENCE (dark) ====== */
+        .exp-sec {
+            background: var(--charcoal);
+            color: #fff;
+        }
+
+        .exp-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .exp-row {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 32px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .exp-row:last-child { border-bottom: none; }
+
+        .er-company {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .er-role {
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .er-desc {
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .tools-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 48px;
+        }
+
+        .tool-tag {
+            font-size: 0.55rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 10px 22px;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.4);
+            transition: all 0.3s;
+        }
+
+        .tool-tag:hover {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .tool-tag.hl {
+            background: rgba(201,169,110,0.15);
+            border-color: rgba(201,169,110,0.25);
+            color: var(--gold);
+        }
+
+        .tool-tag.hl:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* ====== CTA ====== */
+        .cta-sec {
+            min-height: 60vh;
+            background: var(--deep);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 56px;
+        }
+
+        .cta-bg-shape {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        .cta-arch {
+            width: 500px; height: 700px;
+            border: 1px solid rgba(201,169,110,0.04);
+            border-radius: 250px 250px 0 0;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cta-inner { position: relative; z-index: 10; }
+
+        .cta-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .cta-title em {
+            font-style: normal;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .cta-sub {
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+            margin-bottom: 36px;
+        }
+
+        .cta-btns {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .cta-btns a {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 100px;
+            transition: all 0.3s;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--deep);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(201,169,110,0.25);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.5);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.4rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.15);
+            background: var(--deep);
+        }
+
+        /* ====== REVEALS ====== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.vis { opacity: 1; transform: translateY(0); }
+        .reveal.d1 { transition-delay: 0.08s; }
+        .reveal.d2 { transition-delay: 0.16s; }
+        .reveal.d3 { transition-delay: 0.24s; }
+
+        .prlx { will-change: transform; }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 900px) {
+            nav { padding: 20px 24px; }
+            .hero-content { padding: 0 24px; }
+            .sec-pad { padding: 80px 24px; }
+            .rituals-inner { grid-template-columns: 1fr; gap: 40px; }
+            .rit-visual { height: 250px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .dhl-grid { grid-template-columns: 1fr; }
+            .exp-row { grid-template-columns: 1fr; gap: 4px; }
+            .rit-stats, .dhl-stats { flex-direction: column; gap: 16px; }
+            .cta-btns { flex-direction: column; align-items: center; }
+            .cursor-dot { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+
+<nav>
+    <div class="nav-logo">Jan Lönnqvist</div>
+    <div class="nav-label">Senior Designer, Skincare Packaging / L'Oréal</div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+    <div class="hero-layer hl-glow prlx" data-speed="0.03"></div>
+    <div class="hero-layer hl-arch prlx" data-speed="-0.06"></div>
+    <div class="hero-layer hl-circle prlx" data-speed="0.04"></div>
+    <div class="hero-layer hl-line1 prlx" data-speed="-0.02"></div>
+    <div class="hero-layer hl-line2 prlx" data-speed="0.05"></div>
+    <div class="hero-layer hl-dot1 prlx" data-speed="-0.08"></div>
+    <div class="hero-layer hl-dot2 prlx" data-speed="0.07"></div>
+
+    <div class="hero-content">
+        <div class="hero-pre">Application / Senior Designer, Skincare Packaging / Clichy</div>
+        <h1>The art of<br><em>beautiful objects.</em></h1>
+        <p class="hero-body">10+ years designing for global beauty and consumer brands. Lead Graphic Designer at Rituals Cosmetics. Package design, campaign art direction, brand systems, and production at scale. Previous project with L'Oréal Finland.</p>
+    </div>
+</section>
+
+<!-- ====== MARQUEE ====== -->
+<div class="marquee-wrap">
+    <div class="marquee-inner">
+        <span>Packaging Design</span><span>Art Direction</span><span>Brand Systems</span><span>Sustainability</span><span>Print Production</span><span>Campaign Design</span><span>Visual Identity</span><span>Cosmetics</span>
+        <span>Packaging Design</span><span>Art Direction</span><span>Brand Systems</span><span>Sustainability</span><span>Print Production</span><span>Campaign Design</span><span>Visual Identity</span><span>Cosmetics</span>
+    </div>
+</div>
+
+<!-- ====== L'ORÉAL CONNECTION ====== -->
+<section class="connection-sec sec-pad">
+    <div class="bg-shape bg-arch-right prlx" data-speed="-0.04"></div>
+    <div class="bg-shape bg-circle-left prlx" data-speed="0.03"></div>
+
+    <div class="connection-inner">
+        <div class="label gold reveal">Personal connection</div>
+        <h2 class="heading reveal d1">I've worked with <em>L'Oréal</em> before.</h2>
+        <p class="body-text connection-body reveal d2">
+            Early in my career as a designer in Finland, <strong>I worked on a project with L'Oréal Finland.</strong> That experience gave me a first look at how a global beauty brand operates, how brand guidelines translate across markets, and how precision matters at every level. Now with 10+ years of experience, including a <strong>Lead Graphic Designer role at Rituals Cosmetics</strong>, I bring a deep understanding of the cosmetics industry, packaging production, and what it takes to create objects that people desire.
+        </p>
+        <div class="highlight-card reveal d3">
+            <p><strong>At Rituals, I owned the brand book, designed seasonal packaging, created campaign materials, and managed POS production.</strong> The Hammam campaign I designed achieved the highest sales in the product's history. I understand how packaging, campaign, and brand identity work together in luxury beauty.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ====== RITUALS CASE STUDY ====== -->
+<section class="rituals-sec sec-pad">
+    <div class="rituals-inner">
+        <div class="rit-visual">
+            <div class="rit-shape rs1 prlx" data-speed="-0.05"></div>
+            <div class="rit-shape rs2 prlx" data-speed="0.04"></div>
+            <div class="rit-shape rs3 prlx" data-speed="-0.07"></div>
+            <div class="rit-shape rs4 prlx" data-speed="0.03"></div>
+        </div>
+        <div class="rit-text">
+            <div class="label gold reveal">Featured / Rituals Cosmetics</div>
+            <h2 class="heading reveal d1" style="color:#fff;">Lead Graphic Designer,<br><em>luxury cosmetics.</em></h2>
+            <p class="body-text reveal d2">
+                <strong>Campaign design, POS materials, seasonal package design, and brand book ownership.</strong> I designed across the full Rituals ecosystem, from in-store displays to digital campaigns. Seasonal collections required creating packaging variations that maintained brand identity while feeling fresh and desirable. I managed the complete production pipeline from concept to print-ready files.
+            </p>
+            <div class="rit-stats reveal d3">
+                <div>
+                    <div class="rit-stat-val">No.1</div>
+                    <div class="rit-stat-label">Hammam sales in product history</div>
+                </div>
+                <div>
+                    <div class="rit-stat-val">Full</div>
+                    <div class="rit-stat-label">Brand book ownership</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== SKILLS ====== -->
+<section class="skills-sec sec-pad">
+    <div class="skills-inner">
+        <div class="label muted reveal">Requirements match</div>
+        <h2 class="heading reveal d1">What I bring to <em>L'Oréal.</em></h2>
+
+        <div class="skills-grid">
+            <div class="skill-card reveal">
+                <div class="sk-need">You need</div>
+                <div class="sk-title">Cosmetics packaging expertise</div>
+                <div class="sk-desc">Lead Graphic Designer at Rituals Cosmetics. Seasonal package design, POS, campaign materials. Package design at UPM. Print production background with hands-on offset experience.</div>
+            </div>
+            <div class="skill-card reveal d1">
+                <div class="sk-need">You need</div>
+                <div class="sk-title">Design thinking & innovation</div>
+                <div class="sk-desc">Concept to production across multiple brands. Translate consumer insights into visual solutions. Campaign concepting at Rituals, DHL, GLS, HelloFresh.</div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="sk-need">You need</div>
+                <div class="sk-title">Software & rendering proficiency</div>
+                <div class="sk-desc">Adobe CC (Photoshop, Illustrator, InDesign, After Effects). Figma. AI tools for concepting (Midjourney, Sora, Veo3). 10+ years daily production use.</div>
+            </div>
+            <div class="skill-card reveal d1">
+                <div class="sk-need">You need</div>
+                <div class="sk-title">Sustainable design mindset</div>
+                <div class="sk-desc">Print production knowledge from operating offset machines to managing eco-conscious material choices. Understanding of manufacturing processes and material constraints.</div>
+            </div>
+            <div class="skill-card reveal">
+                <div class="sk-need">You need</div>
+                <div class="sk-title">Cross-functional collaboration</div>
+                <div class="sk-desc">Led design team at HelloFresh. Client-facing at agency level on DHL account. Presented concepts to stakeholders. Managed feedback across time zones at GLS (40 countries).</div>
+            </div>
+            <div class="skill-card reveal d1">
+                <div class="sk-need">You need</div>
+                <div class="sk-title">Trend awareness & brand DNA</div>
+                <div class="sk-desc">Owned the Rituals brand book. Stayed current with cosmetics trends. Understanding of luxury positioning, consumer desire, and how visual identity drives desirability.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== DHL CASE ====== -->
+<section class="dhl-sec sec-pad">
+    <div class="dhl-inner">
+        <div class="label gold reveal">Case study / Agency work</div>
+        <h2 class="heading reveal d1">DHL Supply Chain, <em>design to production.</em></h2>
+        <p class="body-text reveal d2" style="max-width: 560px; color: var(--text);">
+            <strong>Lead Designer at agency level.</strong> DHL needed to recruit across 20+ cities. I owned the full creative process, from data-driven persona creation to localized visuals to final production across every paid social channel.
+        </p>
+
+        <div class="dhl-stats reveal d3">
+            <div>
+                <div class="dhl-stat-val">20%</div>
+                <div class="dhl-stat-label">Leads in month one</div>
+            </div>
+            <div>
+                <div class="dhl-stat-val">20+</div>
+                <div class="dhl-stat-label">Cities targeted</div>
+            </div>
+            <div>
+                <div class="dhl-stat-val">5</div>
+                <div class="dhl-stat-label">Channels</div>
+            </div>
+        </div>
+
+        <div class="dhl-grid">
+            <div class="dhl-card reveal">
+                <h4>Localized creative</h4>
+                <p>Created <strong>targeted personas</strong> from data. Different visuals per city and target group. Each location got its own creative, not just translations.</p>
+            </div>
+            <div class="dhl-card reveal d1">
+                <h4>Full production</h4>
+                <p>Produced <strong>all animations and stills</strong> for LinkedIn, Instagram, TikTok, and Indeed. Campaign performed so well <strong>DHL ordered more work</strong>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== EXPERIENCE ====== -->
+<section class="exp-sec sec-pad">
+    <div class="exp-inner">
+        <div class="label reveal" style="color: rgba(255,255,255,0.2);">Experience</div>
+        <h2 class="heading reveal d1" style="color: #fff;">Career</h2>
+
+        <div style="margin-top: 40px;">
+            <div class="exp-row reveal">
+                <div><div class="er-company">L'Oréal Finland</div><div class="er-role">Project (Early Career)</div></div>
+                <div class="er-desc">Design project for L'Oréal Finland. First exposure to global beauty brand operations and guidelines.</div>
+            </div>
+            <div class="exp-row reveal">
+                <div><div class="er-company">Rituals Cosmetics</div><div class="er-role">Lead Graphic Designer</div></div>
+                <div class="er-desc">Campaign design, POS materials, seasonal package design. Brand book owner. Hammam campaign (highest sales in the product's history).</div>
+            </div>
+            <div class="exp-row reveal">
+                <div><div class="er-company">GLS Group</div><div class="er-role">Designer</div></div>
+                <div class="er-desc">Group-level creative across 40 countries. Campaign design, print production, vendor management, expo, UI/UX. Foil stamping and specialty print.</div>
+            </div>
+            <div class="exp-row reveal">
+                <div><div class="er-company">DHL (Agency)</div><div class="er-role">Lead Designer</div></div>
+                <div class="er-desc">Recruitment campaign across 20+ cities. Persona design, localized visuals, animations and stills for all social channels.</div>
+            </div>
+            <div class="exp-row reveal">
+                <div><div class="er-company">HelloFresh</div><div class="er-role">Team Lead, Graphic Design</div></div>
+                <div class="er-desc">Led team of 3. Recipe cards, brand collabs, multi-brand design across multiple markets.</div>
+            </div>
+            <div class="exp-row reveal">
+                <div><div class="er-company">IKEA</div><div class="er-role">Art Direction / Photography</div></div>
+                <div class="er-desc">Campaign design and production for sustainability project.</div>
+            </div>
+            <div class="exp-row reveal">
+                <div><div class="er-company">UPM</div><div class="er-role">Designer</div></div>
+                <div class="er-desc">Package design and print materials for Finnish forest industry company.</div>
+            </div>
+            <div class="exp-row reveal" style="border-bottom:none;">
+                <div><div class="er-company">Agencies & Print</div><div class="er-role">Various</div></div>
+                <div class="er-desc">Lönnberg, Cocomms, Pixmill, Planex, Valve, Multiprint. Print production, editorial, packaging. Hands-on offset and digital print.</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 48px;">
+            <div class="label reveal" style="color: rgba(255,255,255,0.15);">Toolkit</div>
+            <div class="tools-wrap reveal d1">
+                <span class="tool-tag hl">Photoshop</span>
+                <span class="tool-tag hl">Illustrator</span>
+                <span class="tool-tag hl">After Effects</span>
+                <span class="tool-tag hl">Figma</span>
+                <span class="tool-tag">InDesign</span>
+                <span class="tool-tag">Premiere Pro</span>
+                <span class="tool-tag">Midjourney</span>
+                <span class="tool-tag">Sora</span>
+                <span class="tool-tag">Veo3</span>
+                <span class="tool-tag">Runway</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 36px;">
+            <div class="label reveal" style="color: rgba(255,255,255,0.15);">Education</div>
+            <div class="exp-row reveal" style="border-bottom:none;">
+                <div><div class="er-company">Heltech, Käpylä</div><div class="er-role">Helsinki, Finland</div></div>
+                <div class="er-desc">Graphic Design and Print Media.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="cta-sec">
+    <div class="cta-bg-shape cta-arch prlx" data-speed="-0.03"></div>
+    <div class="cta-inner">
+        <h2 class="cta-title reveal">Let's create<br><em>beautiful things.</em></h2>
+        <div class="cta-sub reveal d1">Senior Designer, Skincare Packaging / L'Oréal / Clichy</div>
+        <div class="cta-btns reveal d2">
+            <a href="mailto:jan.lonnqvist@windowslive.com" class="btn-gold">Email Me</a>
+            <a href="tel:+31619584748" class="btn-outline">+31 619 584 748</a>
+        </div>
+    </div>
+</section>
+
+<footer>Jan Lönnqvist / Helsinki &middot; Amsterdam / 2026</footer>
+
+<script>
+    // Cursor
+    const dot = document.getElementById('cursorDot');
+    document.addEventListener('mousemove', e => {
+        dot.style.left = e.clientX - 4 + 'px';
+        dot.style.top = e.clientY - 4 + 'px';
+    });
+
+    // Parallax
+    const prlxEls = document.querySelectorAll('.prlx');
+    let scrollY = 0, currentY = 0;
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function tick() {
+        currentY = lerp(currentY, scrollY, 0.06);
+        const vh = window.innerHeight;
+
+        prlxEls.forEach(el => {
+            const speed = parseFloat(el.dataset.speed || 0);
+            const rect = el.parentElement ? el.parentElement.getBoundingClientRect() : el.getBoundingClientRect();
+            const center = rect.top + rect.height / 2 - vh / 2;
+            const base = el.style.transform && el.style.transform.includes('translate(') ? '' : '';
+            el.style.transform = `translateY(${center * speed}px)`;
+        });
+
+        requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+    tick();
+
+    // Reveals
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
